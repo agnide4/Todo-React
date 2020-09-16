@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Header from "./components/layout/header"
 import './App.css';
 import Todos from "./components/Todos"
 
@@ -26,13 +27,33 @@ class App extends Component {
     ]
   }
 
+  markComplete = (id) =>{
+    console.log("this is an example of prop-drilling")
+    console.log(id)
+    this.setState({todos: this.state.todos.map(todo => {
+      if(todo.id === id){
+        todo.completed = !todo.completed
+      }
+      return todo;
+    })})
+}
+
+  //delete Todo
+  delTodo = (id) =>{
+    console.log("Prop-drilled again")
+    this.setState({todos: [...this.state.todos.filter(todo => todo.id !== id)]})
+
+  }
+
+
 
     render(){
 
 
       return (
         <div className="App">
-          <Todos todos={this.state.todos}/>
+          <Header/>
+          <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
         </div>
       );
 
