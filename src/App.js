@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Header from "./components/layout/header"
 import './App.css';
 import Todos from "./components/Todos"
-
+import AddTodo from "./components/addTodo"
+import { v4 } from "uuid"
 
 //class based component
 class App extends Component {
@@ -10,17 +11,17 @@ class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: v4(),
         title: "learn react",
         completed: false
       },
       {
-        id: 2,
+        id: v4(),
         title: "Do homework",
         completed: false
       },
       {
-        id: 3,
+        id: v4(),
         title: "Get hired",
         completed: false
       }
@@ -45,7 +46,19 @@ class App extends Component {
 
   }
 
+  //add Task
+  addTask = (title) => {
+    console.log(title)
+    const newTask = {
+      id: v4(),
+      title: title, //in Es6 can just title
+      completed: false
+    }
+    //add to state
+    this.setState({ todos: [...this.state.todos, newTask]})
+  }
 
+  
 
     render(){
 
@@ -54,6 +67,7 @@ class App extends Component {
         <div className="App">
           <Header/>
           <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+          <AddTodo addTask={this.addTask}/>
         </div>
       );
 
