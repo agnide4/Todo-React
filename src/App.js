@@ -4,6 +4,8 @@ import './App.css';
 import Todos from "./components/Todos"
 import AddTodo from "./components/addTodo"
 import { v4 } from "uuid"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import About from './components/pages/About';
 
 //class based component
 class App extends Component {
@@ -64,11 +66,26 @@ class App extends Component {
 
 
       return (
-        <div className="App">
-          <Header/>
-          <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
-          <AddTodo addTask={this.addTask}/>
-        </div>
+        <Router>
+          <div className="App">
+            <div className="container">
+                  <Header/>
+                  <Route exact path="/" render={props => (
+                      <React.Fragment>
+                           <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+                          <AddTodo addTask={this.addTask}/>
+                      </React.Fragment>
+
+                  )} />
+                  <Route path="/about" component={About}/>
+                 
+
+            </div>
+          
+          </div>
+
+        </Router>
+        
       );
 
     }
