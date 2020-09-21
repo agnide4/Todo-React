@@ -3,32 +3,39 @@ import Header from "./components/layout/header"
 import './App.css';
 import Todos from "./components/Todos"
 import AddTodo from "./components/addTodo"
-import { v4 } from "uuid"
+//import { v4 } from "uuid"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import About from './components/pages/About';
-
+import axios from "axios"
 //class based component
 class App extends Component {
 
   state = {
     todos: [
-      {
-        id: v4(),
-        title: "learn react",
-        completed: false
-      },
-      {
-        id: v4(),
-        title: "Do homework",
-        completed: false
-      },
-      {
-        id: v4(),
-        title: "Get hired",
-        completed: false
-      }
+      // {
+      //   id: v4(),
+      //   title: "learn react",
+      //   completed: false
+      // },
+      // {
+      //   id: v4(),
+      //   title: "Do homework",
+      //   completed: false
+      // },
+      // {
+      //   id: v4(),
+      //   title: "Get hired",
+      //   completed: false
+      // }
     ]
   }
+
+
+ componentDidMount(){
+   axios.get("https://jsonplaceholder.typicode.com/todos?_limit=15")
+        .then(response => this.setState( {todos:response.data}) )
+ }
+
 
   markComplete = (id) =>{
     console.log("this is an example of prop-drilling")
@@ -51,13 +58,18 @@ class App extends Component {
   //add Task
   addTask = (title) => {
     console.log(title)
-    const newTask = {
-      id: v4(),
-      title: title, //in Es6 can just title
-      completed: false
-    }
+    // const newTask = {
+    //   id: v4(),
+    //   title: title, //in Es6 can just title
+    //   completed: false
+    // }
+    axios.post("https://jsonplaceholder.typicode.com/todos", {
+              title,
+              completed: false
+    })
+          .then(response => this.setState( {todos: [...this.state.todos, response.data]}))
     //add to state
-    this.setState({ todos: [...this.state.todos, newTask]})
+    // this.setState({ todos: [...this.state.todos, newTask]})
   }
 
   
